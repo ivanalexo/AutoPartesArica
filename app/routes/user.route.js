@@ -10,11 +10,11 @@ module.exports = app => {
   });
   var router = require('express').Router();
 
-  router.get('/', user.findAll);
-  router.get('/:id', [authJwt.verifyToken], user.findOne);
-  router.put('/:id', user.update);
-  router.delete('/:id', user.delete);
-  router.delete('/', user.deleteAll);
+  router.get('/',[authJwt.verifyToken, authJwt.isAdmin], user.findAll);
+  router.get('/:id', [authJwt.verifyToken, authJwt.isAdmin, authJwt.isEmployee], user.findOne);
+  router.put('/:id', [authJwt.verifyToken, authJwt.isAdmin, authJwt.isEmployee], user.update);
+  router.delete('/:id', [authJwt.verifyToken, authJwt.isAdmin], user.delete);
+  router.delete('/', [authJwt.verifyToken, authJwt.isAdmin], user.deleteAll);
 
   //test
   router.get('/test/admin/:id',
