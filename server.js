@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 
 db.mongoose
-  .connect(db.url, {
+  .connect(process.env.MONGODB_URI || db.url, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
