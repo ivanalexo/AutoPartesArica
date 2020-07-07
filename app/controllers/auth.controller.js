@@ -37,7 +37,10 @@ exports.signup = (req, res) => {
               return;
             }
 
-            res.send({ message: 'User was registerd' });
+            res.send({
+              status: 1,
+              message: 'User was registerd' 
+            });
           });
         });
     } else {
@@ -53,7 +56,10 @@ exports.signup = (req, res) => {
             res.status(500).send({ message: err });
           }
 
-          res.send({ message: 'User was registerd' });
+          res.send({
+            status: 1,
+            message: 'User was registerd'
+           });
         });
       });
     }
