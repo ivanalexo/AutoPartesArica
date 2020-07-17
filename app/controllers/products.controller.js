@@ -1,16 +1,24 @@
 const db = require('../models');
 const Products = db.productos;
+const ImageController = require('../controllers/image.controller');
 
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
+  let img = {}
   if (!req.body.code && !req.body.name) {
     res.status(400).send({ message: 'Content can not be empty!' });
     return;
   }
 
+  img = {
+    id: !("id" in req.body.image) ? undefined : req.body.image.id,
+    src: !("src" in req.body.image) ? undefined : req.body.image.src
+  }
+  console.log(img)
   const product = new Products({
     code: req.body.code,
     name: req.body.name,
     model: req.body.model,
+    image: img,
     description: req.body.model,
     price: req.body.price,
     quantity: req.body.quantity

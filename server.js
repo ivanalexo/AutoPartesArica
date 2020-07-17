@@ -65,6 +65,7 @@ app.get('/', (req, res) => {
 require('./app/routes/auth.routes')(app);
 require('./app/routes/product.routes')(app);
 require('./app/routes/user.route')(app);
+require('./app/routes/image.routes')(app);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
