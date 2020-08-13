@@ -81,7 +81,7 @@ exports.update = (req, res) => {
   const id = req.params.id;
 
   Products.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-  then(data => {
+  .then(data => {
     if (!data) {
       res.status(404).send({
         message: 'Cannot update Product'

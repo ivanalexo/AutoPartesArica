@@ -11,7 +11,7 @@ module.exports = app => {
   var router = require('express').Router();
 
   router.get('/',[authJwt.verifyToken, authJwt.isAdmin], user.findAll);
-  router.get('/:id', [authJwt.verifyToken, authJwt.isAdmin, authJwt.isEmployee], user.findOne);
+  router.get('/:id', [authJwt.verifyToken, authJwt.isAdmin], user.findOne);
   router.put('/:id', [authJwt.verifyToken, authJwt.isAdmin, authJwt.isEmployee], user.update);
   router.delete('/:id', [authJwt.verifyToken, authJwt.isAdmin], user.delete);
   router.delete('/', [authJwt.verifyToken, authJwt.isAdmin], user.deleteAll);
