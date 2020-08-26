@@ -1,12 +1,10 @@
 module.exports = mongoose => {
     const schema = mongoose.Schema(
         {
-            product: [
-                {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: 'products'
-                }
-            ],
+            product: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'products'
+            },
             finalPrice: {
                 type: Number,
                 required: true
@@ -21,7 +19,7 @@ module.exports = mongoose => {
             },
             salesman: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'user'
+                ref: 'user',
             },
         },
         { timestamps: true }

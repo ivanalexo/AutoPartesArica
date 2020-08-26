@@ -9,12 +9,14 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
+app.use(cors());
 
 
 db.mongoose
   .connect(process.env.MONGODB_URI || db.url, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
   })
   .then(() => {
     console.log('Connected to database!');
@@ -66,6 +68,7 @@ require('./app/routes/auth.routes')(app);
 require('./app/routes/product.routes')(app);
 require('./app/routes/user.route')(app);
 require('./app/routes/image.routes')(app);
+require('./app/routes/sales.route')(app);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

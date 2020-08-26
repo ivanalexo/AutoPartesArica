@@ -13,7 +13,7 @@ exports.create = async (req, res) => {
     id: !("id" in req.body.image) ? undefined : req.body.image.id,
     src: !("src" in req.body.image) ? undefined : req.body.image.src
   }
-  console.log(img)
+  
   const product = new Products({
     code: req.body.code,
     name: req.body.name,
