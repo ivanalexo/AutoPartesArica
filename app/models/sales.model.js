@@ -6,8 +6,7 @@ module.exports = mongoose => {
                 ref: 'products'
             },
             finalPrice: {
-                type: Number,
-                required: true
+                type: Number
             },
             quantity: {
                 type: Number,
