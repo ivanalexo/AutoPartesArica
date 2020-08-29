@@ -21,8 +21,7 @@ verifyToken = (req, res, next) => {
 };
 
 isAdmin = (req, res, next) => {
-  User.findById(req.params.id).then(data => {
-    console.log(data)
+  User.findById(req.userId).then(data => {
     if (!data) {
       res.status(500).send({ message: 'Data not found' });
       return;
@@ -32,7 +31,6 @@ isAdmin = (req, res, next) => {
       _id: { $in: data.roles }
     },
       (err, roles) => {
-        console.log(roles)
         if (err) {
           res.status(500).send({ message: err });
           return;

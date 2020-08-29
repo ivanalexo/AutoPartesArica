@@ -12,7 +12,7 @@ module.exports = app => {
 
   router.get('/',[authJwt.verifyToken, authJwt.isAdmin], user.findAll);
   router.get('/:id', [authJwt.verifyToken, authJwt.isAdmin], user.findOne);
-  router.put('/:id', [authJwt.verifyToken, authJwt.isAdmin, authJwt.isEmployee], user.update);
+  router.put('/:id', [authJwt.verifyToken, authJwt.isAdmin], user.update);
   router.delete('/:id', [authJwt.verifyToken, authJwt.isAdmin], user.delete);
   router.delete('/', [authJwt.verifyToken, authJwt.isAdmin], user.deleteAll);
 
