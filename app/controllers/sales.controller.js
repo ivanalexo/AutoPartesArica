@@ -22,11 +22,21 @@ exports.create = async (req, res) => {
                 res.status(500).send({ message: err });
                 return;
             }
-            sales.finalPrice = product.map(product => product.price) * req.body.quantity;
+            sales.product = product.map(product => product._id);
         });
     }
 
     if (req.body.quantity) {
+        Products.find({
+            _id: { $in: req.body.product }
+        }, (err, product) => {
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+            sales.finalPrice = product.map(product => product.price) * req.body.quantity
+        });
+
         let limitQuantity = await Products.find({
             _id: { $in: req.body.product }
         }, (err, product) => {
@@ -36,6 +46,11 @@ exports.create = async (req, res) => {
             }
             return product.map(product => product.quantity);
         });
+
+        if (req.body.quantity === 0) {
+            res.status(500).send({ message: 'Producto no disponible' });
+            return;
+        }
         if (req.body.quantity > limitQuantity[0].quantity) {
             res.status(500).send({ message: `La cantidad disponible es: ${limitQuantity[0].quantity}`});
             return;
@@ -53,7 +68,7 @@ exports.create = async (req, res) => {
                 })
                 .catch(err => {
                     res.status(500).send({
-                        message: 'Error updating'
+                        message: err
                     });
                     return;
                 });
@@ -69,28 +84,22 @@ exports.create = async (req, res) => {
                 return;
             }
             sales.salesman = user.map(user => user._id);
-            sales.save(err => {
-                if (err) {
-                    res.status(500).send({ message: err });
+            sales
+                .save(sales)
+                .then(() => {
+                    res.send({
+                        status: 1,
+                        message: 'Sale registered successfully'
+                    });
                     return;
-                }
-            });
+                })
+                .catch(err => {
+                    res.status(500).send({
+                        message: 'Error to save a sale'
+                    });
+                    return;
+                })
         });
     }
 
-    sales
-        .save(sales)
-        .then(() => {
-            res.send({
-                status: 1,
-                message: 'Sale registered successfully'
-            });
-            return;
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: 'Error to save a sale'
-            });
-            return;
-        })
 }
